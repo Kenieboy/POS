@@ -76,7 +76,12 @@ const login = async (req, res) => {
 const profile = async (req, res) => {
   const user = await findById(req.user.id);
 
-  res.json(user);
+  // res.json(user);
+
+  res.json({
+    success: true,
+    user,
+  });
 };
 
 const logout = (req, res) => {
