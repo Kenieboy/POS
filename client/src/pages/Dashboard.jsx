@@ -2,6 +2,7 @@ import { useState } from "react";
 import { logoutAPI } from "../features/auth/authAPI";
 import { useNavigate } from "react-router-dom";
 import { useOutletContext } from "react-router-dom";
+import { profileAPI } from "../features/auth/authAPI";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -40,6 +41,21 @@ function Dashboard() {
     },
   ];
 
+  const handleUsersClick = async () => {
+    try {
+      const res = await profileAPI();
+
+      console.log("User is authenticated");
+      console.log(res.data);
+    } catch (err) {
+      if (err.response?.status === 401) {
+        console.log("Session expired");
+
+        //navigate("/login");
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 flex">
       {/* Sidebar */}
@@ -57,7 +73,10 @@ function Dashboard() {
             </li>
 
             <li>
-              <button className="w-full text-left px-4 py-3 rounded-lg hover:bg-indigo-600 transition">
+              <button
+                onClick={handleUsersClick}
+                className="w-full text-left px-4 py-3 rounded-lg hover:bg-indigo-600 transition"
+              >
                 Users
               </button>
             </li>

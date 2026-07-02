@@ -21,35 +21,17 @@ function Login() {
     }));
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   setLoading(true);
-  //   setError("");
-
-  //   try {
-  //     await loginAPI(form);
-
-  //     // JWT cookie is automatically stored by the browser
-  //     navigate("/dashboard");
-  //   } catch (err) {
-  //     setError(err.response?.data?.message || "Login failed.");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const res = await loginAPI(form);
 
-      console.log("Login success", res.data);
+      //console.log("Login success", res.data);
 
       navigate("/dashboard");
 
-      console.log("After navigate");
+      //console.log("After navigate");
     } catch (err) {
       console.log(err.response);
     }

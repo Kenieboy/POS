@@ -12,6 +12,8 @@ function ProtectedRoute() {
       try {
         const res = await profileAPI();
 
+        console.log(res.data);
+
         if (res.data.success) {
           setAuthenticated(true);
           setUser(res.data.user);
