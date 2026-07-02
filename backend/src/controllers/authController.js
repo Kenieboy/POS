@@ -6,25 +6,35 @@ import generateToken from "../utils/generateToken.js";
 const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
+
     const existing = await findByEmail(email);
+
     if (existing) {
       return res.status(400).json({
+        success: false,
         message: "Email already exists",
       });
     }
+
     const hashedPassword = await bcrypt.hash(password, 10);
-    const id = await createUser(name, email, hashedPassword);
-    const token = generateToken(id);
+
+    // Default role = Staff (role_id = 4)
+    const roleId = 4;
+
+    const id = await createUser(name, email, hashedPassword, roleId);
+
+    const user = await findById(id);
+
+    const token = generateToken(user.id);
+
     res.status(201).json({
       success: true,
       token,
-      user: {
-        name,
-        email,
-      },
+      user,
     });
   } catch (err) {
     res.status(500).json({
+      success: false,
       message: err.message,
     });
   }
